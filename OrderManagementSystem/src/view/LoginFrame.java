@@ -1,12 +1,14 @@
 package view;
 
+import core.Helper;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class LoginFrame extends JFrame {
     private JPanel mainPanel;
     private JPanel topPanel;
-    private JLabel titleLabel;
+    private JLabel  titleLabel;
     private JTextField emailField;
     private JPasswordField passwordField;
     private JButton loginButton;
@@ -24,7 +26,14 @@ public class LoginFrame extends JFrame {
         this.setVisible(true);
 
         loginButton.addActionListener(e -> {
-            System.out.println("login yapıldı");
+            JTextField[] checkList = {this.passwordField, this.emailField};
+            if (!Helper.isEmailValid(this.emailField.getText()))
+                Helper.showMsg("Lütfen geçerli bir e-mail giriniz!");
+
+            if (Helper.isFieldListEmpty(checkList))
+                Helper.showMsg("fill");
+            else
+                Helper.showMsg("done");
         });
     }
 }
