@@ -1,6 +1,8 @@
 package view;
 
+import business.UserController;
 import core.Helper;
+import entity.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,15 +16,21 @@ public class LoginFrame extends JFrame {
     private JButton loginButton;
     private JLabel emailLabel;
     private JLabel passwordLabel;
+    private UserController userController;
 
     public LoginFrame() {
+        this.userController = new UserController();
         this.add(mainPanel);
         this.setTitle("Müşteri Yönetim Sistemi");
         this.setSize(400,400);
-
+        /*
+        * screen location 1
         int x = (Toolkit.getDefaultToolkit().getScreenSize().width - this.getSize().width) / 2;
         int y = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getSize().height) / 2;
         this.setLocation(x, y);
+         */
+        // screen location 2
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
 
         loginButton.addActionListener(e -> {
@@ -32,8 +40,15 @@ public class LoginFrame extends JFrame {
 
             if (Helper.isFieldListEmpty(checkList))
                 Helper.showMsg("fill");
-            else
-                Helper.showMsg("done");
+            else {
+                User user = this.userController.findByLogin(this.emailField.getText(), this.passwordField.getText());
+                if (user == null)
+                    Helper.showMsg("Girdiğiniz bilgilere göre kullanıcı bulunamadı!");
+                else {
+                    this.dispose();
+                    DashboardFrame dashboardFrame = new DashboardFrame(user);
+                }
+            }
         });
     }
 }
