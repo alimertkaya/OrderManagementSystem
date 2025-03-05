@@ -7,6 +7,11 @@ import javax.swing.*;
 
 public class DashboardFrame extends JFrame {
     private JPanel mainPanel;
+    private JPanel topPanel;
+    private JLabel welcomeLabel;
+    private JButton exitButton;
+    private JTabbedPane menuTab;
+    private JPanel customerPanel;
     private User user;
 
     public DashboardFrame(User user) {
@@ -21,7 +26,11 @@ public class DashboardFrame extends JFrame {
         this.setSize(1000,500);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        this.welcomeLabel.setText("Hoşgeldiniz: " + this.user.getName());
 
-        System.out.println(user.toString());
+        exitButton.addActionListener(e -> {
+            this.dispose();
+            LoginFrame loginFrame = new LoginFrame();
+        });
     }
 }
