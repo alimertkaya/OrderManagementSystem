@@ -1,9 +1,15 @@
 package view;
 
+import business.CustomerController;
 import core.Helper;
+import entity.Customer;
 import entity.User;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class DashboardFrame extends JFrame {
     private JPanel pnl_main;
@@ -22,9 +28,12 @@ public class DashboardFrame extends JFrame {
     private JPanel pnl_customer_filter;
     private JLabel lbl_f_customer_type;
     private User user;
+    private CustomerController customerController;
+    private DefaultTableModel tmdl_customer = new DefaultTableModel();
 
     public DashboardFrame(User user) {
         this.user = user;
+        this.customerController = new CustomerController();
         if (user == null) {
             Helper.showMsg("error");
             this.dispose();
@@ -41,5 +50,37 @@ public class DashboardFrame extends JFrame {
             this.dispose();
             LoginFrame loginFrame = new LoginFrame();
         });
+
+        loadCustomerTable(null);
+    }
+
+    private void loadCustomerTable(ArrayList<Customer> customers) {
+        Object[] columnCustomer = {"ID", "Müşteri Adı", "Tipi", "Telefon", "E-posta", "Adres"};
+
+        if (customers == null) {
+            customers = this.customerController.findAll();
+        }
+
+        // table refresh
+        DefaultTableModel clearModel = (DefaultTableModel) this.tbl_customer.getModel();
+        clearModel.setRowCount(0);
+
+        this.tmdl_customer.setColumnIdentifiers(columnCustomer);
+        for (Customer customer : customers) {
+            Object[] rowObject = {
+                    customer.getId(),
+                    customer.getName(),
+                    customer.getType(),
+                    customer.getPhone(),
+                    customer.getMail(),
+                    customer.getAddress()
+            };
+            this.tmdl_customer.addRow(rowObject);
+        }
+
+        this.tbl_customer.setModel(tmdl_customer);
+        this.tbl_customer.getTableHeader().setReorderingAllowed(false); // columnların yer değiştirmesini engeller
+        this.tbl_customer.getColumnModel().getColumn(0).setMaxWidth(50); // id column genişliğini ayarlar
+        this.tbl_customer.setEnabled(false); // kullanıcı tabloyu sadece görebilir, düzenleyemez
     }
 }
