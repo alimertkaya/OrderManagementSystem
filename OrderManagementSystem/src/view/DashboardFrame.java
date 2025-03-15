@@ -7,8 +7,11 @@ import entity.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class DashboardFrame extends JFrame {
@@ -30,6 +33,7 @@ public class DashboardFrame extends JFrame {
     private User user;
     private CustomerController customerController;
     private DefaultTableModel tmdl_customer = new DefaultTableModel();
+    private JPopupMenu popup_customer = new JPopupMenu();
 
     public DashboardFrame(User user) {
         this.user = user;
@@ -52,6 +56,30 @@ public class DashboardFrame extends JFrame {
         });
 
         loadCustomerTable(null);
+        loadCustomerPopupMenu();
+    }
+
+    private void loadCustomerPopupMenu() {
+        this.tbl_customer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    int selectedRow = tbl_customer.rowAtPoint(e.getPoint());
+                    tbl_customer.setRowSelectionInterval(selectedRow, selectedRow); // tek bir satırı secmek istedigimiz icin 2 defa aynı parametreyi gectik
+                    popup_customer.show(tbl_customer, e.getX(), e.getY());
+                }
+            }
+        });
+
+        this.popup_customer.add("Update").addActionListener(e -> {
+            int selectId = Integer.parseInt(tbl_customer.getValueAt(tbl_customer.getSelectedRow(), 0).toString());
+            System.out.println(selectId);
+        });
+        this.popup_customer.add("Delete").addActionListener(e -> {
+            System.out.println("deleted");
+        });
+
+        this.tbl_customer.setComponentPopupMenu(this.popup_customer);
     }
 
     private void loadCustomerTable(ArrayList<Customer> customers) {
