@@ -57,17 +57,24 @@ public class DashboardFrame extends JFrame {
 
         loadCustomerTable(null);
         loadCustomerPopupMenu();
+        loadCustomerButtonEvent();
+    }
+
+    private void loadCustomerButtonEvent() {
+        this.btn_customer_new.addActionListener(e -> {
+            CustomerFrame customerFrame = new CustomerFrame(new Customer());
+        });
     }
 
     private void loadCustomerPopupMenu() {
         this.tbl_customer.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    int selectedRow = tbl_customer.rowAtPoint(e.getPoint());
-                    tbl_customer.setRowSelectionInterval(selectedRow, selectedRow); // tek bir satırı secmek istedigimiz icin 2 defa aynı parametreyi gectik
+                int selectedRow = tbl_customer.rowAtPoint(e.getPoint());
+                tbl_customer.setRowSelectionInterval(selectedRow, selectedRow); // tek bir satırı secmek istedigimiz icin 2 defa aynı parametreyi gectik
+
+                if (e.getButton() == MouseEvent.BUTTON3)
                     popup_customer.show(tbl_customer, e.getX(), e.getY());
-                }
             }
         });
 
