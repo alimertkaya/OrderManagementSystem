@@ -1,9 +1,12 @@
 package view;
 
 import business.CustomerController;
+import core.Helper;
 import entity.Customer;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CustomerFrame extends JFrame {
     private JPanel mainPanel;
@@ -43,5 +46,15 @@ public class CustomerFrame extends JFrame {
             this.cmb_customer_type.getModel().setSelectedItem(this.customer.getType());
         }
 
+        btn_customer_save.addActionListener(e -> {
+            JTextField[] checkList = {this.fld_customer_name, this.fld_customer_phone};
+            if (Helper.isFieldListEmpty(checkList)) {
+                Helper.showMsg("fill");
+            } else if (!Helper.isFieldEmpty(this.fld_customer_mail) && !Helper.isEmailValid(this.fld_customer_mail.getText())) {
+                Helper.showMsg("Lütfen geçerli bir e-posta adresi giriniz!");
+            } else {
+
+            }
+        });
     }
 }
