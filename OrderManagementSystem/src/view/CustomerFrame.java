@@ -53,7 +53,22 @@ public class CustomerFrame extends JFrame {
             } else if (!Helper.isFieldEmpty(this.fld_customer_mail) && !Helper.isEmailValid(this.fld_customer_mail.getText())) {
                 Helper.showMsg("Lütfen geçerli bir e-posta adresi giriniz!");
             } else {
+                boolean result = false;
+                this.customer.setName(this.fld_customer_name.getText());
+                this.customer.setPhone(this.fld_customer_phone.getText());
+                this.customer.setMail(this.fld_customer_mail.getText());
+                this.customer.setAddress(this.tarea_customer_address.getText());
+                this.customer.setType((Customer.TYPE) this.cmb_customer_type.getSelectedItem());
 
+                if (this.customer.getId() == 0)
+                    result = this.customerController.save(customer);
+
+                if (result) {
+                    Helper.showMsg("done");
+                    this.dispose();
+                } else {
+                    Helper.showMsg("error");
+                }
             }
         });
     }

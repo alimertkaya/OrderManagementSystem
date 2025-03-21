@@ -14,5 +14,6 @@ public class CustomerController {
 
     public boolean save(Customer customer) {
         return this.customerDao.save(customer);
+
     }
 }

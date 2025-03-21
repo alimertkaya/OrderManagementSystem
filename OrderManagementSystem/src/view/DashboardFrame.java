@@ -8,10 +8,7 @@ import entity.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class DashboardFrame extends JFrame {
@@ -63,6 +60,12 @@ public class DashboardFrame extends JFrame {
     private void loadCustomerButtonEvent() {
         this.btn_customer_new.addActionListener(e -> {
             CustomerFrame customerFrame = new CustomerFrame(new Customer());
+            customerFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadCustomerTable(null);
+                }
+            });
         });
     }
 
@@ -73,7 +76,7 @@ public class DashboardFrame extends JFrame {
                 int selectedRow = tbl_customer.rowAtPoint(e.getPoint());
                 tbl_customer.setRowSelectionInterval(selectedRow, selectedRow); // tek bir satırı secmek istedigimiz icin 2 defa aynı parametreyi gectik
 
-                if (e.getButton() == MouseEvent.BUTTON3)
+                if (e.getButton() == MouseEvent.BUTTON3) // right click
                     popup_customer.show(tbl_customer, e.getX(), e.getY());
             }
         });
