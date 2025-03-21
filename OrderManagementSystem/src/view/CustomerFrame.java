@@ -62,6 +62,8 @@ public class CustomerFrame extends JFrame {
 
                 if (this.customer.getId() == 0)
                     result = this.customerController.save(customer);
+                else
+                    result = this.customerController.update(customer);
 
                 if (result) {
                     Helper.showMsg("done");

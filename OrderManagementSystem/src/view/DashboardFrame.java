@@ -83,7 +83,13 @@ public class DashboardFrame extends JFrame {
 
         this.popup_customer.add("Update").addActionListener(e -> {
             int selectId = Integer.parseInt(tbl_customer.getValueAt(tbl_customer.getSelectedRow(), 0).toString());
-            System.out.println(selectId);
+            CustomerFrame customerFrame = new CustomerFrame(this.customerController.getById(selectId));
+            customerFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadCustomerTable(null);
+                }
+            });
         });
         this.popup_customer.add("Delete").addActionListener(e -> {
             System.out.println("deleted");
