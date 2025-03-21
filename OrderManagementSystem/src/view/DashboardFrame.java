@@ -92,7 +92,15 @@ public class DashboardFrame extends JFrame {
             });
         });
         this.popup_customer.add("Delete").addActionListener(e -> {
-            System.out.println("deleted");
+            int selectId = Integer.parseInt(tbl_customer.getValueAt(tbl_customer.getSelectedRow(), 0).toString());
+            if (Helper.confirm("sure")) {
+                if (this.customerController.delete(selectId)) {
+                    Helper.showMsg("done");
+                    loadCustomerTable(null);
+                } else {
+                    Helper.showMsg("error");
+                }
+            }
         });
 
         this.tbl_customer.setComponentPopupMenu(this.popup_customer);

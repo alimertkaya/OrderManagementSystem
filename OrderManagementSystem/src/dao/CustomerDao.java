@@ -77,6 +77,17 @@ public class CustomerDao {
         }
     }
 
+    public boolean delete(int id) {
+        String query = "DELETE FROM customer WHERE id = ?";
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setInt(1, id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Customer getById(int id) {
         Customer customer = null;
         String query = "SELECT * FROM customer WHERE id = ?";
