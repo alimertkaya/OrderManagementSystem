@@ -76,6 +76,12 @@ public class DashboardFrame extends JFrame {
             );
             loadCustomerTable(filteredCustomers);
         });
+
+        this.btn_customer_filter_reset.addActionListener(e -> {
+            loadCustomerTable(null);
+            this.fld_f_customer_name.setText(null);
+            this.cmb_f_customer_type.setSelectedItem(null);
+        });
     }
 
     private void loadCustomerPopupMenu() {
