@@ -1,8 +1,10 @@
 package view;
 
 import business.CustomerController;
+import business.ProductController;
 import core.Helper;
 import entity.Customer;
+import entity.Product;
 import entity.User;
 
 import javax.swing.*;
@@ -26,14 +28,30 @@ public class DashboardFrame extends JFrame {
     private JLabel lbl_f_customer_name;
     private JPanel pnl_customer_filter;
     private JLabel lbl_f_customer_type;
+    private JPanel pnl_product;
+    private JScrollPane scrl_panel;
+    private JTable tbl_product;
+    private JPanel pnl_product_filter;
+    private JTextField fld_f_product_name;
+    private JTextField fld_f_product_code;
+    private JComboBox cmb_product_stock;
+    private JButton btn_product_filter;
+    private JButton btn_product_reset;
+    private JButton btn_product_new;
+    private JLabel lbl_f_product_name;
+    private JLabel lbl_f_product_code;
+    private JLabel lbl_f_product_stock;
     private User user;
     private CustomerController customerController;
+    private ProductController productController;
     private DefaultTableModel tmdl_customer = new DefaultTableModel();
+    private DefaultTableModel tmdl_product = new DefaultTableModel();
     private JPopupMenu popup_customer = new JPopupMenu();
 
     public DashboardFrame(User user) {
         this.user = user;
         this.customerController = new CustomerController();
+        this.productController = new ProductController();
         if (user == null) {
             Helper.showMsg("error");
             this.dispose();
@@ -51,11 +69,43 @@ public class DashboardFrame extends JFrame {
             LoginFrame loginFrame = new LoginFrame();
         });
 
+        // CUSTOMER TAB
         loadCustomerTable(null);
         loadCustomerPopupMenu();
         loadCustomerButtonEvent();
         this.cmb_f_customer_type.setModel(new DefaultComboBoxModel<>(Customer.TYPE.values()));
         this.cmb_f_customer_type.setSelectedItem(null);
+
+        // PRODUCT TAB
+        loadProductTable(null);
+    }
+
+    private void loadProductTable(ArrayList<Product> products) {
+        Object[] columnProduct = {"ID", "Ürün Adı", "Ürün Code", "Fiyat", "Stok"};
+
+        if (products == null) {
+            products = this.productController.findAll();
+        }
+
+        DefaultTableModel clearModel = (DefaultTableModel) this.tbl_product.getModel();
+        clearModel.setRowCount(0);
+
+        this.tmdl_product.setColumnIdentifiers(columnProduct);
+        for (Product product : products) {
+            Object[] rowObject = {
+                    product.getId(),
+                    product.getName(),
+                    product.getCode(),
+                    product.getPrice(),
+                    product.getStock()
+            };
+            this.tmdl_product.addRow(rowObject);
+        }
+
+        this.tbl_product.setModel(tmdl_product);
+        this.tbl_product.getTableHeader().setReorderingAllowed(false);
+        this.tbl_product.getColumnModel().getColumn(0).setMaxWidth(50);
+        this.tbl_product.setEnabled(false);
     }
 
     private void loadCustomerButtonEvent() {

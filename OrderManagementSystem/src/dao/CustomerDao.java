@@ -18,9 +18,8 @@ public class CustomerDao {
 
     public ArrayList<Customer> findAll() {
         ArrayList<Customer> customers = new ArrayList<>();
-        ResultSet rs = null;
         try {
-            rs = this.connection.createStatement().executeQuery("SELECT * FROM customer");
+            ResultSet rs = this.connection.createStatement().executeQuery("SELECT * FROM customer");
             while (rs.next()) {
                 customers.add(this.match(rs));
             }
