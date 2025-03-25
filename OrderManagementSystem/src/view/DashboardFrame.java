@@ -47,6 +47,7 @@ public class DashboardFrame extends JFrame {
     private DefaultTableModel tmdl_customer = new DefaultTableModel();
     private DefaultTableModel tmdl_product = new DefaultTableModel();
     private JPopupMenu popup_customer = new JPopupMenu();
+    private JPopupMenu popup_product = new JPopupMenu();
 
     public DashboardFrame(User user) {
         this.user = user;
@@ -78,7 +79,26 @@ public class DashboardFrame extends JFrame {
 
         // PRODUCT TAB
         loadProductTable(null);
+        loadProductPopupMenu();
     }
+
+    private void loadProductPopupMenu() {
+        this.tbl_product.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int selectedRow = tbl_product.rowAtPoint(e.getPoint());
+                tbl_product.setRowSelectionInterval(selectedRow, selectedRow);
+
+                if (e.getButton() == MouseEvent.BUTTON3)
+                    popup_product.show(tbl_product, e.getX(), e.getY());
+            }
+        });
+
+        this.popup_product.add("Update");
+        this.popup_product.add("Delete");
+        this.popup_product.setComponentPopupMenu(popup_product);
+    }
+
 
     private void loadProductTable(ArrayList<Product> products) {
         Object[] columnProduct = {"ID", "Ürün Adı", "Ürün Code", "Fiyat", "Stok"};
