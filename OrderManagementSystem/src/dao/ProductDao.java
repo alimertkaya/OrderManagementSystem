@@ -4,6 +4,7 @@ import core.Database;
 import entity.Product;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,6 +27,28 @@ public class ProductDao {
             throw new RuntimeException(e);
         }
         return products;
+    }
+
+    public boolean save(Product product) {
+        String query = "INSERT INTO product " +
+                "(" +
+                "name," +
+                "code," +
+                "price," +
+                "stock" +
+                ")" +
+                " VALUES (?,?,?,?)";
+
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setString(1, product.getName());
+            pr.setString(2, product.getCode());
+            pr.setString(3, String.valueOf(product.getPrice()));
+            pr.setString(4, String.valueOf(product.getStock()));
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Product match(ResultSet rs) throws SQLException {

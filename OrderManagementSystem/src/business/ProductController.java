@@ -11,4 +11,8 @@ public class ProductController {
     public ArrayList<Product> findAll() {
         return this.productDao.findAll();
     }
+
+    public boolean save(Product product) {
+        return this.productDao.save(product);
+    }
 }

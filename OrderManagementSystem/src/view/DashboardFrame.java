@@ -80,6 +80,20 @@ public class DashboardFrame extends JFrame {
         // PRODUCT TAB
         loadProductTable(null);
         loadProductPopupMenu();
+        loadProductButtonEvent();
+
+    }
+
+    private void loadProductButtonEvent() {
+        this.btn_product_new.addActionListener(e -> {
+            ProductFrame productFrame = new ProductFrame(new Product());
+            productFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadProductTable(null);
+                }
+            });
+        });
     }
 
     private void loadProductPopupMenu() {
@@ -98,7 +112,6 @@ public class DashboardFrame extends JFrame {
         this.popup_product.add("Delete");
         this.popup_product.setComponentPopupMenu(popup_product);
     }
-
 
     private void loadProductTable(ArrayList<Product> products) {
         Object[] columnProduct = {"ID", "Ürün Adı", "Ürün Code", "Fiyat", "Stok"};
