@@ -108,7 +108,16 @@ public class DashboardFrame extends JFrame {
             }
         });
 
-        this.popup_product.add("Update");
+        this.popup_product.add("Update").addActionListener(e -> {
+            int selectId = Integer.parseInt(tbl_product.getValueAt(tbl_product.getSelectedRow(), 0).toString());
+            ProductFrame productFrame = new ProductFrame(this.productController.getById(selectId));
+            productFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadProductTable(null);
+                }
+            });
+        });
         this.popup_product.add("Delete");
         this.popup_product.setComponentPopupMenu(popup_product);
     }

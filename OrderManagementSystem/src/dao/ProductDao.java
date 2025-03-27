@@ -43,12 +43,48 @@ public class ProductDao {
             PreparedStatement pr = this.connection.prepareStatement(query);
             pr.setString(1, product.getName());
             pr.setString(2, product.getCode());
-            pr.setString(3, String.valueOf(product.getPrice()));
-            pr.setString(4, String.valueOf(product.getStock()));
+            pr.setInt(3, product.getPrice());
+            pr.setInt(4, product.getStock());
             return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean update(Product product) {
+        String query = "UPDATE product SET " +
+                "name = ? , " +
+                "code = ? , " +
+                "price = ? , " +
+                "stock = ? " +
+                "WHERE id = ?";
+
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setString(1, product.getName());
+            pr.setString(2, product.getCode());
+            pr.setInt(3, product.getPrice());
+            pr.setInt(4, product.getStock());
+            pr.setInt(5, product.getId());
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Product getById(int id) {
+        Product product = null;
+        String query = "SELECT * FROM product WHERE id = ?";
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setInt(1,id);
+            ResultSet rs = pr.executeQuery();
+            if (rs.next())
+                product = this.match(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return product;
     }
 
     public Product match(ResultSet rs) throws SQLException {

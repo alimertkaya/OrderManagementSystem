@@ -60,6 +60,15 @@ public class ProductFrame extends JFrame {
 
                 if (this.product.getId() == 0)
                     result = this.productController.save(product);
+                else
+                    result = this.productController.update(product);
+
+                if (result) {
+                    Helper.showMsg("done");
+                    this.dispose();
+                } else {
+                    Helper.showMsg("error");
+                }
             }
 
         });

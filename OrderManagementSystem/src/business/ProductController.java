@@ -1,5 +1,6 @@
 package business;
 
+import core.Helper;
 import dao.ProductDao;
 import entity.Product;
 
@@ -14,5 +15,17 @@ public class ProductController {
 
     public boolean save(Product product) {
         return this.productDao.save(product);
+    }
+
+    public boolean update(Product product) {
+        if (this.getById(product.getId()) == null) {
+            Helper.showMsg("Bu " + product.getId() + " ID'e ait bir ürün bulunamadı!");
+            return false;
+        }
+        return this.productDao.update(product);
+    }
+
+    public Product getById(int id) {
+        return this.productDao.getById(id);
     }
 }
