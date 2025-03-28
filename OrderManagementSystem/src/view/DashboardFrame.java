@@ -3,6 +3,7 @@ package view;
 import business.CustomerController;
 import business.ProductController;
 import core.Helper;
+import core.Item;
 import entity.Customer;
 import entity.Product;
 import entity.User;
@@ -34,7 +35,7 @@ public class DashboardFrame extends JFrame {
     private JPanel pnl_product_filter;
     private JTextField fld_f_product_name;
     private JTextField fld_f_product_code;
-    private JComboBox cmb_product_stock;
+    private JComboBox<Item> cmb_f_product_stock;
     private JButton btn_product_filter;
     private JButton btn_product_reset;
     private JButton btn_product_new;
@@ -81,6 +82,9 @@ public class DashboardFrame extends JFrame {
         loadProductTable(null);
         loadProductPopupMenu();
         loadProductButtonEvent();
+        this.cmb_f_product_stock.addItem(new Item(1, "Stokta Var"));
+        this.cmb_f_product_stock.addItem(new Item(2, "Stokta Yok"));
+        this.cmb_f_product_stock.setSelectedItem(null);
 
     }
 
@@ -93,6 +97,15 @@ public class DashboardFrame extends JFrame {
                     loadProductTable(null);
                 }
             });
+        });
+
+        this.btn_product_filter.addActionListener(e -> {
+            ArrayList<Product> filteredProducts = this.productController.filter(
+                    this.fld_f_product_name.getText(),
+                    this.fld_f_product_code.getText(),
+                    (Item) this.cmb_f_product_stock.getSelectedItem()
+            );
+            loadProductTable(filteredProducts);
         });
     }
 

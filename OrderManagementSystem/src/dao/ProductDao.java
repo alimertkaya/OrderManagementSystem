@@ -83,6 +83,24 @@ public class ProductDao {
         }
     }
 
+    public ArrayList<Product> queryPrepared(String query, ArrayList<Object> parameters) {
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            for (int i = 0; i < parameters.size(); i++) {
+                pr.setObject(i + 1, parameters.get(i));
+            }
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                products.add(this.match(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return products;
+    }
+
     public Product getById(int id) {
         Product product = null;
         String query = "SELECT * FROM product WHERE id = ?";

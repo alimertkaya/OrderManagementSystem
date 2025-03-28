@@ -28,7 +28,7 @@ public class ProductFrame extends JFrame {
         this.productController = new ProductController();
         this.add(mainPanel);
         this.setTitle("Ürün Ekle/Düzenle");
-        this.setSize(300,500);
+        this.setSize(300,350);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 

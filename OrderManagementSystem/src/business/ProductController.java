@@ -1,6 +1,7 @@
 package business;
 
 import core.Helper;
+import core.Item;
 import dao.ProductDao;
 import entity.Product;
 
@@ -31,6 +32,37 @@ public class ProductController {
             return false;
         }
         return this.productDao.delete(id);
+    }
+
+    public ArrayList<Product> filter(String name, String code, Item isStock) {
+        String query = "SELECT * FROM product";
+        ArrayList<String> whereList = new ArrayList<>();
+        ArrayList<Object> parameters = new ArrayList<>();
+
+        if (!name.isEmpty()) {
+            whereList.add("name LIKE ?");
+            parameters.add("%" + name + "%");
+        }
+
+        if (!code.isEmpty()) {
+            whereList.add("code LIKE ?");
+            parameters.add("%" + code + "%");
+        }
+
+        if (isStock != null) {
+            if (isStock.getKey() == 1) {
+                whereList.add("stock > ?");
+                parameters.add(0);
+            } else {
+                whereList.add("stock < ?");
+                parameters.add(0);
+            }
+        }
+
+        if (!whereList.isEmpty()) {
+            query += " WHERE " + String.join(" AND ", whereList);
+        }
+        return this.productDao.queryPrepared(query, parameters);
     }
 
     public Product getById(int id) {
