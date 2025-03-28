@@ -54,7 +54,7 @@ public class ProductController {
                 whereList.add("stock > ?");
                 parameters.add(0);
             } else {
-                whereList.add("stock < ?");
+                whereList.add("stock <= ?");
                 parameters.add(0);
             }
         }

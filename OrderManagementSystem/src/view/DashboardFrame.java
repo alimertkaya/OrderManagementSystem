@@ -107,6 +107,13 @@ public class DashboardFrame extends JFrame {
             );
             loadProductTable(filteredProducts);
         });
+
+        this.btn_product_reset.addActionListener(e -> {
+            loadProductTable(null);
+            this.fld_f_product_name.setText(null);
+            this.fld_f_product_code.setText(null);
+            this.cmb_f_product_stock.setSelectedItem(null);
+        });
     }
 
     private void loadProductPopupMenu() {
