@@ -25,6 +25,14 @@ public class ProductController {
         return this.productDao.update(product);
     }
 
+    public boolean delete(int id) {
+        if (this.getById(id) == null) {
+            Helper.showMsg("Bu " + id + " ID'e ait bir ürün bulunamadı!");
+            return false;
+        }
+        return this.productDao.delete(id);
+    }
+
     public Product getById(int id) {
         return this.productDao.getById(id);
     }

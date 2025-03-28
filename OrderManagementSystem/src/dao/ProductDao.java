@@ -72,6 +72,17 @@ public class ProductDao {
         }
     }
 
+    public boolean delete(int id) {
+        String query = "DELETE FROM product WHERE id = ?";
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setInt(1, id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Product getById(int id) {
         Product product = null;
         String query = "SELECT * FROM product WHERE id = ?";

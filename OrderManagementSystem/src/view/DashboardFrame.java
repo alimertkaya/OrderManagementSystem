@@ -118,7 +118,17 @@ public class DashboardFrame extends JFrame {
                 }
             });
         });
-        this.popup_product.add("Delete");
+        this.popup_product.add("Delete").addActionListener(e -> {
+            int selectId = Integer.parseInt(tbl_product.getValueAt(tbl_product.getSelectedRow(), 0).toString());
+            if (Helper.confirm("sure")) {
+                if (this.productController.delete(selectId)) {
+                    Helper.showMsg("done");
+                    loadProductTable(null);
+                } else {
+                    Helper.showMsg("error");
+                }
+            }
+        });
         this.popup_product.setComponentPopupMenu(popup_product);
     }
 
