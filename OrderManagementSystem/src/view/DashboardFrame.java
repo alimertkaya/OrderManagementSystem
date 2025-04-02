@@ -1,9 +1,11 @@
 package view;
 
+import business.BasketController;
 import business.CustomerController;
 import business.ProductController;
 import core.Helper;
 import core.Item;
+import entity.Basket;
 import entity.Customer;
 import entity.Product;
 import entity.User;
@@ -45,6 +47,7 @@ public class DashboardFrame extends JFrame {
     private User user;
     private CustomerController customerController;
     private ProductController productController;
+    private BasketController basketController;
     private DefaultTableModel tmdl_customer = new DefaultTableModel();
     private DefaultTableModel tmdl_product = new DefaultTableModel();
     private JPopupMenu popup_customer = new JPopupMenu();
@@ -54,6 +57,7 @@ public class DashboardFrame extends JFrame {
         this.user = user;
         this.customerController = new CustomerController();
         this.productController = new ProductController();
+        this.basketController = new BasketController();
         if (user == null) {
             Helper.showMsg("error");
             this.dispose();
@@ -125,6 +129,21 @@ public class DashboardFrame extends JFrame {
 
                 if (e.getButton() == MouseEvent.BUTTON3)
                     popup_product.show(tbl_product, e.getX(), e.getY());
+            }
+        });
+
+        this.popup_product.add("Add Basket").addActionListener(e -> {
+            int selectId = Integer.parseInt(tbl_product.getValueAt(tbl_product.getSelectedRow(), 0).toString());
+            Product basketProduct = this.productController.getById(selectId);
+            if (basketProduct.getStock() <= 0) {
+                Helper.showMsg("Bu ürün stokta yoktur!");
+            } else {
+                Basket basket = new Basket(basketProduct.getId());
+                boolean result = false;
+                if (this.basketController.save(basket))
+                    Helper.showMsg("done");
+                else
+                    Helper.showMsg("error");
             }
         });
 
