@@ -105,6 +105,9 @@ public class DashboardFrame extends JFrame {
         loadBasketButtonEvent();
         loadBasketCustomerCombo();
 
+        btn_customer_new.addActionListener(e -> {
+
+        });
     }
 
     private void loadBasketCustomerCombo() {

@@ -12,7 +12,7 @@ public class CartController {
         return this.cartDao.findAll();
     }
 
-    public boolean Save(Cart cart) {
+    public boolean save(Cart cart) {
         return this.cartDao.save(cart);
     }
 }
