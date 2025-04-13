@@ -15,7 +15,6 @@ public class Database {
     private Database() {
         try {
             this.connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-            System.out.println("bağlantı başarılı");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

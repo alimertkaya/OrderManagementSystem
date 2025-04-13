@@ -55,6 +55,33 @@ public class CartDao {
         }
     }
 
+    public boolean delete(int id) {
+        String query = "DELETE FROM cart WHERE id = ?";
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setInt(1, id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Cart getById(int id) {
+        Cart cart = null;
+        String query = "SELECT * FROM cart WHERE id = ?";
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setInt(1, id);
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                cart = this.match(rs);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return cart;
+    }
+
     public Cart match(ResultSet rs) throws SQLException {
         Cart cart = new Cart();
         cart.setId(rs.getInt("id"));

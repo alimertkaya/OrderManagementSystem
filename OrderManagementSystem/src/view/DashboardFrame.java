@@ -66,6 +66,7 @@ public class DashboardFrame extends JFrame {
     private DefaultTableModel tmdl_cart = new DefaultTableModel();
     private JPopupMenu popup_customer = new JPopupMenu();
     private JPopupMenu popup_product = new JPopupMenu();
+    private JPopupMenu popup_cart = new JPopupMenu();
 
     public DashboardFrame(User user) {
         this.user = user;
@@ -112,7 +113,35 @@ public class DashboardFrame extends JFrame {
 
         // CART TAB
         loadCartTable();
+        loadCartPopupMenu();
 
+    }
+
+    private void loadCartPopupMenu() {
+        this.tbl_cart.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int selectedRow = tbl_cart.rowAtPoint(e.getPoint());
+                tbl_cart.setRowSelectionInterval(selectedRow, selectedRow);
+
+                if (e.getButton() == MouseEvent.BUTTON3)
+                    popup_cart.show(tbl_cart, e.getX(), e.getY());
+            }
+        });
+
+        this.popup_cart.add("Delete").addActionListener(e -> {
+            int selectId = Integer.parseInt(tbl_cart.getValueAt(tbl_cart.getSelectedRow(), 0).toString());
+            if (Helper.confirm("sure")) {
+                if (this.cartController.delete(selectId)) {
+                    Helper.showMsg("done");
+                    loadCartTable();
+                }
+                else {
+                    Helper.showMsg("error");
+                }
+            }
+        });
+        this.popup_cart.setComponentPopupMenu(popup_cart);
     }
 
     private void loadCartTable() {
