@@ -38,7 +38,7 @@ public class CartDao {
                 "product_id," +
                 "price," +
                 "date," +
-                "text" +
+                "note" +
                 ")" +
                 " VALUES (?,?,?,?,?)";
 
@@ -61,7 +61,7 @@ public class CartDao {
         cart.setCostumerId(rs.getInt("customer_id"));
         cart.setProductId(rs.getInt("product_id"));
         cart.setPrice(rs.getInt("price"));
-        cart.setDate(LocalDate.parse(rs.getString("date")));
+        cart.setDate(LocalDate.parse(rs.getString("date").substring(0,10)));
         cart.setNote(rs.getString("note"));
         cart.setCustomer(this.customerDao.getById(cart.getCostumerId()));
         cart.setProduct(this.productDao.getById(cart.getProductId()));
