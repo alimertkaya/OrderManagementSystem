@@ -7,6 +7,10 @@ import entity.Basket;
 import entity.Customer;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class CartFrame extends JFrame {
@@ -43,5 +47,11 @@ public class CartFrame extends JFrame {
             this.dispose();
         }
         this.lbl_customer_name.setText("Müşteri: " + customer.getName());
+    }
+
+    private void createUIComponents() throws ParseException {
+        this.fld_cart_date = new JFormattedTextField(new MaskFormatter("##/##/####"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.fld_cart_date.setText(formatter.format(LocalDate.now()));
     }
 }

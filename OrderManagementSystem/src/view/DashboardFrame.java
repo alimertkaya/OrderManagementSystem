@@ -105,8 +105,22 @@ public class DashboardFrame extends JFrame {
         loadBasketButtonEvent();
         loadBasketCustomerCombo();
 
-        btn_customer_new.addActionListener(e -> {
+        btn_basket_new.addActionListener(e -> {
+            Item selectedCustomer = (Item) this.cmb_f_basket_customer.getSelectedItem();
+            if (selectedCustomer == null)
+                Helper.showMsg("Lütfen bir müşteri seçiniz!");
+            else {
+                Customer customer = this.customerController.getById(selectedCustomer.getKey());
+                ArrayList<Basket> baskets = this.basketController.findAll();
+                if (customer.getId() == 0)
+                    Helper.showMsg("Böyle bir müşteri bulunamadı!");
+                else if (baskets.isEmpty())
+                    Helper.showMsg("Lütfen sepete ürün ekleyeniniz");
+                else {
+                    CartFrame cartFrame = new CartFrame(customer);
+                }
 
+            }
         });
     }
 
