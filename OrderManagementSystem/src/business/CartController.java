@@ -17,12 +17,16 @@ public class CartController {
         return this.cartDao.save(cart);
     }
 
-    public boolean delete(int id) {
-        if (this.getById(id) == null) {
-            Helper.showMsg("Bu " + id + " ID'e air bir sipariş bulunamadı!");
+    public boolean deleteById(int cartId) {
+        if (this.getById(cartId) == null) {
+            Helper.showMsg("Bu " + cartId + " ID'e air bir sipariş bulunamadı!");
             return false;
         }
-        return this.cartDao.delete(id);
+        return this.cartDao.deleteById(cartId);
+    }
+
+    public boolean deleteByCustomerId(int customerId) {
+        return this.cartDao.deleteByCustomerId(customerId);
     }
 
     public Cart getById(int id) {

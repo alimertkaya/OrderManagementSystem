@@ -132,7 +132,7 @@ public class DashboardFrame extends JFrame {
         this.popup_cart.add("Delete").addActionListener(e -> {
             int selectId = Integer.parseInt(tbl_cart.getValueAt(tbl_cart.getSelectedRow(), 0).toString());
             if (Helper.confirm("sure")) {
-                if (this.cartController.delete(selectId)) {
+                if (this.cartController.deleteById(selectId)) {
                     Helper.showMsg("done");
                     loadCartTable();
                 }
@@ -207,6 +207,7 @@ public class DashboardFrame extends JFrame {
                         public void windowClosed(WindowEvent e) {
                             loadBasketTable();
                             loadProductTable(null);
+                            loadCartTable();
                         }
                     });
                 }
@@ -406,10 +407,12 @@ public class DashboardFrame extends JFrame {
         this.popup_customer.add("Delete").addActionListener(e -> {
             int selectId = Integer.parseInt(tbl_customer.getValueAt(tbl_customer.getSelectedRow(), 0).toString());
             if (Helper.confirm("sure")) {
+                this.cartController.deleteByCustomerId(selectId);
                 if (this.customerController.delete(selectId)) {
                     Helper.showMsg("done");
                     loadCustomerTable(null);
                     loadBasketCustomerCombo();
+                    loadCartTable();
                 } else {
                     Helper.showMsg("error");
                 }

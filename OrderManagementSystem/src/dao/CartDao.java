@@ -55,11 +55,22 @@ public class CartDao {
         }
     }
 
-    public boolean delete(int id) {
+    public boolean deleteById(int cartId) {
         String query = "DELETE FROM cart WHERE id = ?";
         try {
             PreparedStatement pr = this.connection.prepareStatement(query);
-            pr.setInt(1, id);
+            pr.setInt(1, cartId);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteByCustomerId(int customerId) {
+        String query = "DELETE FROM cart WHERE customer_id = ?";
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setInt(1, customerId);
             return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
