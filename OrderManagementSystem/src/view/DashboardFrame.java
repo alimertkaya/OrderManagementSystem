@@ -55,6 +55,12 @@ public class DashboardFrame extends JFrame {
     private JScrollPane scrl_cart;
     private JScrollPane scrl_basket;
     private JTable tbl_cart;
+    private JTextField fld_f_cart_customer_name;
+    private JTextField fld_f_cart_product_name;
+    private JTextField fld_f_date;
+    private JButton btn_cart_filter;
+    private JPanel pnl_cart_filter;
+    private JButton btn_cart_clear;
     private User user;
     private CustomerController customerController;
     private ProductController productController;
@@ -112,9 +118,28 @@ public class DashboardFrame extends JFrame {
         loadBasketCustomerCombo();
 
         // CART TAB
-        loadCartTable();
+        loadCartTable(null);
         loadCartPopupMenu();
+        loadCartButtonEvent();
 
+    }
+
+    private void loadCartButtonEvent() {
+        this.btn_cart_filter.addActionListener(e -> {
+            ArrayList<Cart> filteredCarts = this.cartController.filter(
+                    this.fld_f_cart_customer_name.getText(),
+                    this.fld_f_cart_product_name.getText(),
+                    this.fld_f_date.getText()
+            );
+            loadCartTable(filteredCarts);
+        });
+
+        this.btn_cart_clear.addActionListener(e -> {
+            loadCartTable(null);
+            this.fld_f_cart_customer_name.setText(null);
+            this.fld_f_cart_product_name.setText(null);
+            this.fld_f_date.setText(null);
+        });
     }
 
     private void loadCartPopupMenu() {
@@ -134,7 +159,7 @@ public class DashboardFrame extends JFrame {
             if (Helper.confirm("sure")) {
                 if (this.cartController.deleteById(selectId)) {
                     Helper.showMsg("done");
-                    loadCartTable();
+                    loadCartTable(null);
                 }
                 else {
                     Helper.showMsg("error");
@@ -144,9 +169,12 @@ public class DashboardFrame extends JFrame {
         this.popup_cart.setComponentPopupMenu(popup_cart);
     }
 
-    private void loadCartTable() {
+    private void loadCartTable(ArrayList<Cart> carts) {
         Object[] columnCart = {"ID", "Müşteri Adı", "Ürün Adı", "Fiyat", "Sipariş Tarihi", "Not"};
-        ArrayList<Cart> carts = this.cartController.findAll();
+
+        if (carts == null) {
+            carts = this.cartController.findAll();
+        }
 
         DefaultTableModel clearModel = (DefaultTableModel) this.tbl_cart.getModel();
         clearModel.setRowCount(0);
@@ -207,7 +235,7 @@ public class DashboardFrame extends JFrame {
                         public void windowClosed(WindowEvent e) {
                             loadBasketTable();
                             loadProductTable(null);
-                            loadCartTable();
+                            loadCartTable(null);
                         }
                     });
                 }
@@ -412,7 +440,7 @@ public class DashboardFrame extends JFrame {
                     Helper.showMsg("done");
                     loadCustomerTable(null);
                     loadBasketCustomerCombo();
-                    loadCartTable();
+                    loadCartTable(null);
                 } else {
                     Helper.showMsg("error");
                 }

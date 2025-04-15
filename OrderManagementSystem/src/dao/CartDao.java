@@ -77,6 +77,24 @@ public class CartDao {
         }
     }
 
+    public ArrayList<Cart> queryPrepared(String query, ArrayList<Object> parameters) {
+        ArrayList<Cart> carts = new ArrayList<>();
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            for (int i = 0; i < parameters.size(); i++) {
+                pr.setObject(i + 1, parameters.get(i));
+            }
+
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                carts.add(this.match(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return carts;
+    }
+
     public Cart getById(int id) {
         Cart cart = null;
         String query = "SELECT * FROM cart WHERE id = ?";

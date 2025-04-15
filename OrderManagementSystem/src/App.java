@@ -10,9 +10,11 @@ import java.sql.Connection;
 public class App {
     public static void main(String[] args) {
         Helper.setTheme();
-        // LoginFrame frame = new LoginFrame();
+        LoginFrame frame = new LoginFrame();
+        /*
         UserController userController = new UserController();
         User user = userController.findByLogin("mert@dev.com", "m123");
         DashboardFrame dashboardFrame = new DashboardFrame(user);
+         */
     }
 }
