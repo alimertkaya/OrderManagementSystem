@@ -20,7 +20,7 @@ public class ProductController {
 
     public boolean update(Product product) {
         if (this.getById(product.getId()) == null) {
-            Helper.showMsg("Bu " + product.getId() + " ID'e ait bir ürün bulunamadı!");
+            Helper.showMsg("There is no product associated with ID " + product.getId() + "!");
             return false;
         }
         return this.productDao.update(product);
@@ -28,7 +28,7 @@ public class ProductController {
 
     public boolean delete(int id) {
         if (this.getById(id) == null) {
-            Helper.showMsg("Bu " + id + " ID'e ait bir ürün bulunamadı!");
+            Helper.showMsg("There is no product associated with ID " + id + "!");
             return false;
         }
         return this.productDao.delete(id);

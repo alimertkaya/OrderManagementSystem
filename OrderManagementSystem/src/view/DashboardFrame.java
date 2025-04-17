@@ -10,6 +10,7 @@ import entity.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
@@ -86,11 +87,11 @@ public class DashboardFrame extends JFrame {
         }
 
         this.add(pnl_main);
-        this.setTitle("Müşteri Yönetim Sistemi");
+        this.setTitle("Customer Management System");
         this.setSize(1000,500);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        this.lbl_welcome.setText("Hoşgeldiniz: " + this.user.getName());
+        this.lbl_welcome.setText("Welcome: " + this.user.getName());
 
         exitButton.addActionListener(e -> {
             this.dispose();
@@ -108,8 +109,8 @@ public class DashboardFrame extends JFrame {
         loadProductTable(null);
         loadProductPopupMenu();
         loadProductButtonEvent();
-        this.cmb_f_product_stock.addItem(new Item(1, "Stokta Var"));
-        this.cmb_f_product_stock.addItem(new Item(2, "Stokta Yok"));
+        this.cmb_f_product_stock.addItem(new Item(1, "In Stock"));
+        this.cmb_f_product_stock.addItem(new Item(2, "Out of Stock"));
         this.cmb_f_product_stock.setSelectedItem(null);
 
         // BASKET TAB
@@ -170,7 +171,7 @@ public class DashboardFrame extends JFrame {
     }
 
     private void loadCartTable(ArrayList<Cart> carts) {
-        Object[] columnCart = {"ID", "Müşteri Adı", "Ürün Adı", "Fiyat", "Sipariş Tarihi", "Not"};
+        Object[] columnCart = {"ID", "Customer Name", "Product Name", "Price", "Order Date", "Note"};
 
         if (carts == null) {
             carts = this.cartController.findAll();
@@ -195,6 +196,7 @@ public class DashboardFrame extends JFrame {
         this.tbl_cart.setModel(tmdl_cart);
         this.tbl_cart.getTableHeader().setReorderingAllowed(false);
         this.tbl_cart.getColumnModel().getColumn(0).setMaxWidth(50);
+        this.tbl_cart.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         this.tbl_cart.setEnabled(false);
     }
 
@@ -220,14 +222,14 @@ public class DashboardFrame extends JFrame {
         this.btn_basket_new.addActionListener(e -> {
             Item selectedCustomer = (Item) this.cmb_f_basket_customer.getSelectedItem();
             if (selectedCustomer == null)
-                Helper.showMsg("Lütfen bir müşteri seçiniz!");
+                Helper.showMsg("Please select a customer!");
             else {
                 Customer customer = this.customerController.getById(selectedCustomer.getKey());
                 ArrayList<Basket> baskets = this.basketController.findAll();
                 if (customer.getId() == 0)
-                    Helper.showMsg("Böyle bir müşteri bulunamadı!");
+                    Helper.showMsg("Customer not found!");
                 else if (baskets.isEmpty())
-                    Helper.showMsg("Lütfen sepete ürün ekleyeniniz");
+                    Helper.showMsg("Please add a product to the cart!");
                 else {
                     CartFrame cartFrame = new CartFrame(customer);
                     cartFrame.addWindowListener(new WindowAdapter() {
@@ -245,7 +247,7 @@ public class DashboardFrame extends JFrame {
     }
 
     private void loadBasketTable() {
-        Object[] columnBasket = {"ID", "Ürün Adı", "Ürün Code", "Fiyat", "Stok"};
+        Object[] columnBasket = {"ID", "Product Name", "Product Code", "Price", "Stock"};
         ArrayList<Basket> baskets = this.basketController.findAll();
 
         DefaultTableModel clearModel = (DefaultTableModel) this.tbl_basket.getModel();
@@ -264,11 +266,12 @@ public class DashboardFrame extends JFrame {
             this.tmdl_basket.addRow(rowObject);
             totalPrice += basket.getProduct().getPrice();
         }
-        this.lbl_f_basket_price.setText(totalPrice + " TL");
-        this.lbl_f_basket_count.setText(baskets.size() + " Adet");
+        this.lbl_f_basket_price.setText("$" + totalPrice);
+        this.lbl_f_basket_count.setText(baskets.size() + " pcs");
         this.tbl_basket.setModel(tmdl_basket);
         this.tbl_basket.getTableHeader().setReorderingAllowed(false);
         this.tbl_basket.getColumnModel().getColumn(0).setMaxWidth(50);
+        this.tbl_basket.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         this.tbl_basket.setEnabled(false);
     }
 
@@ -316,7 +319,7 @@ public class DashboardFrame extends JFrame {
             int selectId = Integer.parseInt(tbl_product.getValueAt(tbl_product.getSelectedRow(), 0).toString());
             Product basketProduct = this.productController.getById(selectId);
             if (basketProduct.getStock() <= 0) {
-                Helper.showMsg("Bu ürün stokta yoktur!");
+                Helper.showMsg("This product is out of stock!");
             } else {
                 Basket basket = new Basket(basketProduct.getId());
                 if (this.basketController.save(basket)) {
@@ -355,7 +358,7 @@ public class DashboardFrame extends JFrame {
     }
 
     private void loadProductTable(ArrayList<Product> products) {
-        Object[] columnProduct = {"ID", "Ürün Adı", "Ürün Code", "Fiyat", "Stok"};
+            Object[] columnProduct = {"ID", "Product Name", "Product Code", "Price", "Stock"};
 
         if (products == null) {
             products = this.productController.findAll();
@@ -379,6 +382,7 @@ public class DashboardFrame extends JFrame {
         this.tbl_product.setModel(tmdl_product);
         this.tbl_product.getTableHeader().setReorderingAllowed(false);
         this.tbl_product.getColumnModel().getColumn(0).setMaxWidth(50);
+        this.tbl_product.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         this.tbl_product.setEnabled(false);
     }
 
@@ -451,7 +455,7 @@ public class DashboardFrame extends JFrame {
     }
 
     private void loadCustomerTable(ArrayList<Customer> customers) {
-        Object[] columnCustomer = {"ID", "Müşteri Adı", "Tipi", "Telefon", "E-posta", "Adres"};
+        Object[] columnCustomer = {"ID", "Customer Name", "Customer Type", "Phone", "E-mail", "Address"};
 
         if (customers == null) {
             customers = this.customerController.findAll();
@@ -477,6 +481,7 @@ public class DashboardFrame extends JFrame {
         this.tbl_customer.setModel(tmdl_customer);
         this.tbl_customer.getTableHeader().setReorderingAllowed(false); // columnların yer değiştirmesini engeller
         this.tbl_customer.getColumnModel().getColumn(0).setMaxWidth(50); // id column genişliğini ayarlar
+        this.tbl_customer.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         this.tbl_customer.setEnabled(false); // kullanıcı tabloyu sadece görebilir, düzenleyemez
     }
 }

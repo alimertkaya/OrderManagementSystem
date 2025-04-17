@@ -38,22 +38,22 @@ public class CartFrame extends JFrame {
         this.cartController = new CartController();
         this.productController = new ProductController();
         this.add(mainPanel);
-        this.setTitle("Sipariş Oluştur");
+        this.setTitle("Create Order");
         this.setSize(300,500);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
         if (customer.getId() == 0) {
-            Helper.showMsg("Lütfen geçerli bir müşteri seçiniz!");
+            Helper.showMsg("Please select a valid customer!");
             this.dispose();
         }
 
         ArrayList<Basket> baskets = this.basketController.findAll();
         if (baskets.isEmpty()) {
-            Helper.showMsg("Lütfen sepete ürün ekleyiniz!");
+            Helper.showMsg("Please add at least one product to the cart!");
             this.dispose();
         }
-        this.lbl_customer_name.setText("Müşteri: " + customer.getName());
+        this.lbl_customer_name.setText("Customer: " + customer.getName());
 
         btn_cart.addActionListener(e -> {
             if (Helper.isFieldEmpty(fld_cart_date))

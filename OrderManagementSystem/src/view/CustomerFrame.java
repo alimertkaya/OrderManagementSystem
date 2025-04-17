@@ -29,16 +29,16 @@ public class CustomerFrame extends JFrame {
         this.customer = customer;
         this.customerController = new CustomerController();
         this.add(mainPanel);
-        this.setTitle("Müşteri Ekle/Düzenle");
+        this.setTitle("Add / Edit Customer");
         this.setSize(300,500);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.cmb_customer_type.setModel(new DefaultComboBoxModel<>(Customer.TYPE.values())); // comboBox da verileri gosterir
 
         if (this.customer.getId() == 0)
-            this.lbl_title.setText("Müşteri Ekle");
+            this.lbl_title.setText("Add Customer");
         else {
-            this.lbl_title.setText("Müşteri Düzenle");
+            this.lbl_title.setText("Edit Customer");
             this.fld_customer_name.setText(this.customer.getName());
             this.fld_customer_phone.setText(this.customer.getPhone());
             this.fld_customer_mail.setText(this.customer.getMail());
@@ -51,7 +51,7 @@ public class CustomerFrame extends JFrame {
             if (Helper.isFieldListEmpty(checkList)) {
                 Helper.showMsg("fill");
             } else if (!Helper.isFieldEmpty(this.fld_customer_mail) && !Helper.isEmailValid(this.fld_customer_mail.getText())) {
-                Helper.showMsg("Lütfen geçerli bir e-posta adresi giriniz!");
+                Helper.showMsg("Please enter a valid email address!");
             } else {
                 boolean result = false;
                 this.customer.setName(this.fld_customer_name.getText());

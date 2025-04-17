@@ -21,7 +21,7 @@ public class LoginFrame extends JFrame {
     public LoginFrame() {
         this.userController = new UserController();
         this.add(mainPanel);
-        this.setTitle("Müşteri Yönetim Sistemi");
+        this.setTitle("Customer Management System");
         this.setSize(400,400);
         /*
         * screen location 1
@@ -36,14 +36,14 @@ public class LoginFrame extends JFrame {
         loginButton.addActionListener(e -> {
             JTextField[] checkList = {this.passwordField, this.emailField};
             if (!Helper.isEmailValid(this.emailField.getText()))
-                Helper.showMsg("Lütfen geçerli bir e-mail giriniz!");
+                Helper.showMsg("Please enter a valid email address!");
 
             if (Helper.isFieldListEmpty(checkList))
                 Helper.showMsg("fill");
             else {
                 User user = this.userController.findByLogin(this.emailField.getText(), this.passwordField.getText());
                 if (user == null)
-                    Helper.showMsg("Girdiğiniz bilgilere göre kullanıcı bulunamadı!");
+                    Helper.showMsg("No user found with the entered credentials!");
                 else {
                     this.dispose();
                     DashboardFrame dashboardFrame = new DashboardFrame(user);

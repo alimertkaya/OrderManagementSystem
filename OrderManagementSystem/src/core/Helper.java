@@ -43,31 +43,32 @@ public class Helper {
         return true;
     }
 
+    /*
     public static void optionPaneDialogTR() {
         UIManager.put("OptionPane.okButtonText", "Tamam");
     }
+     */
 
     public static void showMsg(String message) {
         String msg;
         String title;
-        optionPaneDialogTR();
 
         switch (message) {
             case "fill" -> {
-                msg = "Lütfen tüm alanları doldurunuz!";
+                msg = "Please fill in all fields!";
                 title = "ERROR";
             }
             case "done" -> {
-                msg = "İşlem başarılı";
-                title = "Sonuç";
+                msg = "Operation completed successfully.";
+                title = "Result";
             }
             case "error" -> {
-                msg = "Bir hata oluştu!";
+                msg = "An error occurred!";
                 title = "ERROR";
             }
             default -> {
                 msg = message;
-                title = "Mesaj";
+                title = "Message";
             }
         }
 
@@ -78,10 +79,10 @@ public class Helper {
         String msg;
 
         if (str.equals("sure"))
-            msg = "Bu işlemi gerçekleştirmek istediğinize emin misiniz ?";
+            msg = "Are you sure you want to perform this action?";
         else
             msg = str;
 
-        return JOptionPane.showConfirmDialog(null, msg, "Emin misin ?", JOptionPane.YES_NO_OPTION) == 0;
+        return JOptionPane.showConfirmDialog(null, msg, "Are you sure?", JOptionPane.YES_NO_OPTION) == 0;
     }
 }

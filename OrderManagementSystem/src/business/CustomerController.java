@@ -20,7 +20,7 @@ public class CustomerController {
 
     public boolean update(Customer customer) {
         if (this.getById(customer.getId()) == null) {
-            Helper.showMsg("Bu " + customer.getId() + " ID'e kayıtlı bir kullanıcı bulunamadı!");
+            Helper.showMsg("There is no customer associated with ID " + customer.getId() + "!");
             return false;
         }
         return this.customerDao.update(customer);
@@ -28,7 +28,7 @@ public class CustomerController {
 
     public boolean delete(int id) {
         if (this.getById(id) == null) {
-            Helper.showMsg("Bu " + id + " ID'e kayıtlı bir kullanıcı bulunamadı!");
+            Helper.showMsg("There is no customer associated with ID " + id + "!");
             return false;
         }
         return this.customerDao.delete(id);

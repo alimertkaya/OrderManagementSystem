@@ -21,7 +21,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Müşteri Adı"/>
+          <text value="Customer Name"/>
         </properties>
       </component>
       <component id="be22" class="javax.swing.JTextField" binding="fld_customer_name">
@@ -37,7 +37,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Müşteri Tipi"/>
+          <text value="Customer Type"/>
         </properties>
       </component>
       <component id="7d4c0" class="javax.swing.JComboBox" binding="cmb_customer_type">
@@ -51,7 +51,7 @@
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Telefon"/>
+          <text value="Phone"/>
         </properties>
       </component>
       <component id="93cb2" class="javax.swing.JTextField" binding="fld_customer_phone">
@@ -67,7 +67,7 @@
           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="E-posta"/>
+          <text value="E-mail"/>
         </properties>
       </component>
       <component id="49edf" class="javax.swing.JTextField" binding="fld_customer_mail">
@@ -83,7 +83,7 @@
           <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Adres"/>
+          <text value="Address"/>
         </properties>
       </component>
       <component id="10985" class="javax.swing.JTextArea" binding="tarea_customer_address">

@@ -27,15 +27,15 @@ public class ProductFrame extends JFrame {
         this.product = product;
         this.productController = new ProductController();
         this.add(mainPanel);
-        this.setTitle("Ürün Ekle/Düzenle");
+        this.setTitle("Add / Edit Product");
         this.setSize(300,350);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
         if (this.product.getId() == 0)
-            this.lbl_title.setText("Ürün Ekle");
+            this.lbl_title.setText("Add Product");
         else {
-            this.lbl_title.setText("Ürün Düzenle");
+            this.lbl_title.setText("Edit Product");
             this.fld_product_name.setText(this.product.getName());
             this.fld_product_code.setText(this.product.getCode());
             this.fld_product_price.setText(String.valueOf(this.product.getPrice()));

@@ -19,7 +19,7 @@ public class CartController {
 
     public boolean deleteById(int cartId) {
         if (this.getById(cartId) == null) {
-            Helper.showMsg("Bu " + cartId + " ID'e air bir sipariş bulunamadı!");
+            Helper.showMsg("There is no order associated with ID " + cartId + "!");
             return false;
         }
         return this.cartDao.deleteById(cartId);
