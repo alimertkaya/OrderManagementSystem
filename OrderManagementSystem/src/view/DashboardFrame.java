@@ -87,7 +87,7 @@ public class DashboardFrame extends JFrame {
         }
 
         this.add(pnl_main);
-        this.setTitle("Customer Management System");
+        this.setTitle("Order Management System");
         this.setSize(1000,500);
         this.setLocationRelativeTo(null);
         this.setVisible(true);

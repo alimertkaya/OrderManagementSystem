@@ -21,7 +21,7 @@ public class LoginFrame extends JFrame {
     public LoginFrame() {
         this.userController = new UserController();
         this.add(mainPanel);
-        this.setTitle("Customer Management System");
+        this.setTitle("Order Management System");
         this.setSize(400,400);
         /*
         * screen location 1

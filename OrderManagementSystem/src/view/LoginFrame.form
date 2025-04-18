@@ -22,7 +22,7 @@
             </constraints>
             <properties>
               <font size="14"/>
-              <text value="Customer Management System"/>
+              <text value="Order Management System"/>
             </properties>
           </component>
           <hspacer id="15046">
