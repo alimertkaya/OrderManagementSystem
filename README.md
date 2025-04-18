@@ -29,5 +29,33 @@ A simple desktop-based order management system built with Java Swing and MySQL.
 - **Singleton Pattern:** Ensures a single instance of DB connection
 
 ## 🖼️ Screenshots
-> Application interfaces including login, customer & product management, order creation, and cart views:
+> Login Frame
+<p align="left">
+  <img src = "assets/login.png" width="400"/>
+</p>
 
+> Customer Frame
+<p align="left">
+  <img src="assets/customer.png" width="800" height="400"/><br>
+  <img src="assets/customerAdd.png" width="800" height="400"/>
+</p>
+<br>
+
+> Product Frame
+<p align="left">
+  <img src="assets/product.png" width="800" height="400"/><br>
+  <img src="assets/productPopup.png" width="800" height="400"/>
+</p>
+<br>
+
+> Basket Frame
+<p align="left">
+  <img src="assets/createOrder.png" width="800" height="400"/><br>
+  <img src="assets/createOrderAdd.png" width="800" height="400"/>
+</p>
+<br>
+
+> Cart Frame
+<p align="left">
+  <img src="assets/cart.png" width="800" height="400"/>
+</p>
